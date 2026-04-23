@@ -20,7 +20,7 @@ from urllib.parse import urlparse
 PLACEHOLDER_RE = re.compile(r"\{\{([^{}]+)\}\}")
 SKILL_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT_DIR = SKILL_DIR / "output" / "generated-images"
-DEFAULT_SECRETS_FILE = SKILL_DIR / "secrets.local.json"
+DEFAULT_SECRETS_FILE = SKILL_DIR / "scripts" / "secrets.local.json"
 
 
 class ConfigError(ValueError):
@@ -639,7 +639,7 @@ def main() -> int:
     parser.add_argument(
         "--secrets-file",
         default=str(DEFAULT_SECRETS_FILE),
-        help="本地密钥 JSON 文件路径，默认读取 skill 目录下的 secrets.local.json。",
+        help="本地密钥 JSON 文件路径，默认读取 scripts/secrets.local.json。",
     )
     parser.add_argument("--execute", action="store_true", help="Execute the request.")
     parser.add_argument(

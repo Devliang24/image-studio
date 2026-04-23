@@ -13,10 +13,10 @@ cd image-studio
 2. 从示例复制本地密钥文件：
 
 ```bash
-cp secrets.example.json secrets.local.json
+cp scripts/secrets.example.json scripts/secrets.local.json
 ```
 
-3. 打开 `secrets.local.json`，填入你的 APIMart Key：
+3. 打开 `scripts/secrets.local.json`，填入你的 APIMart Key：
 
 ```json
 {
@@ -57,9 +57,9 @@ output/generated-images/
 ## 配置 API Key
 
 1. 准备 APIMart API Key。
-2. 如果还没有本地密钥文件，先执行 `cp secrets.example.json secrets.local.json`。
-3. 把 Key 写入 `secrets.local.json`。
-4. `secrets.local.json` 已加入 `.gitignore`，不要提交到远端仓库。
+2. 如果还没有本地密钥文件，先执行 `cp scripts/secrets.example.json scripts/secrets.local.json`。
+3. 把 Key 写入 `scripts/secrets.local.json`。
+4. `scripts/secrets.local.json` 已加入 `.gitignore`，不要提交到远端仓库。
 
 ```json
 {
@@ -69,7 +69,7 @@ output/generated-images/
 
 如果 Key 曾经暴露在聊天、日志或截图中，按泄露处理并及时轮换。
 
-`secrets.example.json` 只保留占位符，适合提交；`secrets.local.json` 存真实密钥，只留在本机。
+`scripts/secrets.example.json` 只保留占位符，适合提交；`scripts/secrets.local.json` 存真实密钥，只留在本机。
 
 ## 安装与不同工具使用
 
@@ -180,7 +180,7 @@ python3 scripts/build_image_request.py \
   --poll
 ```
 
-如果你不想使用默认 `secrets.local.json`，可以显式指定密钥文件：
+如果你不想使用默认 `scripts/secrets.local.json`，可以显式指定密钥文件：
 
 ```bash
 python3 scripts/build_image_request.py \
@@ -222,16 +222,38 @@ image-studio/
 ├── .gitignore                                    # 忽略本地密钥和生成图片
 ├── SKILL.md                                      # Skill 入口和执行规则
 ├── README.md                                     # 用户安装和使用说明
-├── secrets.example.json                          # 密钥文件示例
-├── secrets.local.json                            # 本地密钥文件，不要提交
 ├── agents/openai.yaml                            # UI 元信息
 ├── assets/provider.apimart.gpt-image-2-official.json
 │                                                  # 唯一模型配置
 ├── references/provider-contract.md                # APIMart 请求和响应路径说明
 ├── references/prompt-recipes.md                   # 提示词模板
 ├── scripts/build_image_request.py                 # 请求构造、执行、轮询和下载脚本
+├── scripts/secrets.example.json                   # 密钥文件示例
+├── scripts/secrets.local.json                     # 本地密钥文件，不要提交
 └── output/generated-images/                       # 默认图片保存目录
 ```
+
+## 项目结构
+
+这个仓库现在是单模型、单供应商结构，目录职责如下：
+
+- `agents/`
+  存放 UI 元信息，决定 skill 在工具列表里的展示名称、短描述和默认调用提示。
+- `assets/`
+  只保留一个 APIMart 配置文件，避免多模型、多供应商模板带来的歧义。
+- `references/`
+  放辅助文档。`provider-contract.md` 讲接口路径和返回结构，`prompt-recipes.md` 讲提示词写法。
+- `scripts/`
+  放执行脚本和密钥文件。`build_image_request.py` 是唯一执行入口；`secrets.local.json` 放本地真实 key；`secrets.example.json` 是示例模板。
+- `output/generated-images/`
+  放默认下载下来的最终图片。这个目录保留在仓库中，便于第一次使用时直接看到输出位置。
+
+推荐阅读顺序：
+
+1. 先看 `README.md` 的“快速上手”
+2. 再填 `scripts/secrets.local.json`
+3. 然后运行 `scripts/build_image_request.py`
+4. 需要理解接口细节时再看 `references/provider-contract.md`
 
 ## 当前支持的模型
 
@@ -274,4 +296,4 @@ assets/provider.apimart.gpt-image-2-official.json
 
 保持单模型结构即可，当前只需要这一份配置文件。
 
-真实密钥写入 `secrets.local.json`，不要写进 provider JSON 配置，也不要提交到远端仓库。
+真实密钥写入 `scripts/secrets.local.json`，不要写进 provider JSON 配置，也不要提交到远端仓库。

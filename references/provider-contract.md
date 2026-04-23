@@ -8,12 +8,12 @@ assets/provider.apimart.gpt-image-2-official.json
 
 ## 本地密钥
 
-脚本默认读取 skill 目录下的 `secrets.local.json`。
+脚本默认读取 `scripts/secrets.local.json`。
 
 首次使用：
 
 ```bash
-cp secrets.example.json secrets.local.json
+cp scripts/secrets.example.json scripts/secrets.local.json
 ```
 
 然后写入：
@@ -24,7 +24,7 @@ cp secrets.example.json secrets.local.json
 }
 ```
 
-`secrets.local.json` 已加入 `.gitignore`，不要提交到远端仓库。
+`scripts/secrets.local.json` 已加入 `.gitignore`，不要提交到远端仓库。
 
 ## 请求流程
 
