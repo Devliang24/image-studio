@@ -1,0 +1,66 @@
+{
+  "provider_name": "apimart-gpt-image-2-official",
+  "adapter": "template_json",
+  "defaults": {
+    "model": "gpt-image-2-official",
+    "size": "16:9",
+    "resolution": "2k",
+    "quality": "high",
+    "count": 1
+  },
+  "capabilities": {
+    "generate": true,
+    "edit": true,
+    "variation": false,
+    "reference_images": true
+  },
+  "request": {
+    "method": "POST",
+    "url": "https://api.apimart.ai/v1/images/generations",
+    "headers": {
+      "Authorization": "Bearer {{secret:APIMART_API_KEY}}",
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "User-Agent": "curl/8.7.1"
+    },
+    "body": {
+      "model": "{{model}}",
+      "prompt": "{{prompt}}",
+      "size": "{{size}}",
+      "resolution": "{{resolution}}",
+      "quality": "{{quality}}",
+      "n": "{{count}}",
+      "image_urls": "{{reference_images}}",
+      "mask_url": "{{mask_url}}",
+      "output_format": "{{output_format}}",
+      "output_compression": "{{output_compression}}"
+    }
+  },
+  "submission_response": {
+    "task_id_path": "data.0.task_id",
+    "error_path": "error.message"
+  },
+  "task_status_request": {
+    "method": "GET",
+    "url": "https://api.apimart.ai/v1/tasks/{{task_id}}?language={{language}}",
+    "headers": {
+      "Authorization": "Bearer {{secret:APIMART_API_KEY}}",
+      "Accept": "application/json",
+      "User-Agent": "curl/8.7.1"
+    }
+  },
+  "task_response": {
+    "status_path": "data.status",
+    "progress_path": "data.progress",
+    "image_url_path": "data.result.images.0.url.0",
+    "error_path": "data.error.message",
+    "success_status_values": [
+      "completed"
+    ],
+    "failure_status_values": [
+      "failed",
+      "cancelled",
+      "error"
+    ]
+  }
+}

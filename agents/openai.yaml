@@ -1,0 +1,4 @@
+interface:
+  display_name: "图像工坊"
+  short_description: "用 APIMart 生成或改图"
+  default_prompt: "使用 $image-studio 通过 APIMart 生成、改图或迭代图片。"
